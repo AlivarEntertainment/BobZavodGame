@@ -14,7 +14,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private float gravity = -9.81f; // Используем стандартное значение гравитации
     [SerializeField] private float groundCheckDistance = 0.2f;
     [SerializeField] private LayerMask groundLayer;
-    
+
+    public Animator playerAnimator;
     [Space]
     public Transform cameraTransform;
     
@@ -47,8 +48,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
             Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
+            playerAnimator.SetBool("IsWalking", true);
         }
-
+        else
+        {
+            playerAnimator.SetBool("IsWalking", false);
+        }
         // Применяем вертикальное движение (прыжок/гравитация)
         controller.Move(velocity * Time.deltaTime);
     }
