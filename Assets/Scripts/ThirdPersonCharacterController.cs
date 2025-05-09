@@ -25,7 +25,6 @@ public class ThirdPersonCharacterController : MonoBehaviour
     {
         // Проверка земли с визуализацией в редакторе
         isGrounded = Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.1f, groundLayer);
-        Debug.Log("Grounded: " + isGrounded);
 
         // Прыжок
         if (isGrounded && Input.GetKeyDown(KeyCode.Space) && velocity.y < 0.1f)
