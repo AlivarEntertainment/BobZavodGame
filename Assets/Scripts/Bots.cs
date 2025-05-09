@@ -41,6 +41,10 @@ public class Bots : MonoBehaviour
 
     void Update()
     {
+        if (Vector3.Distance(player.position, transform.position) < 1f || player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying) {
+            player.gameObject.GetComponent<ThirdPersonCharacterController>().Die();
+            return;
+        }
         if (waypoints.Count == 0) return;
 
         if (Time.time >= nextCheckTime)
@@ -128,7 +132,6 @@ public class Bots : MonoBehaviour
         if (player != null && CanSeePlayerDirectly())
         {
             lastKnownPlayerPosition = player.position;
-            // Поддерживаем максимальную скорость
             currentSpeed = Mathf.MoveTowards(currentSpeed, chaseSpeed, acceleration * Time.deltaTime);
         }
 

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonCharacterController : MonoBehaviour
@@ -21,9 +23,42 @@ public class ThirdPersonCharacterController : MonoBehaviour
     
     private Vector3 velocity;
     private bool isGrounded;
+    
+    public bool isDiying = false, isControllingSkuf = true, sawCar = false, endedCar = false;
 
+    public Transform CheckPoints;
+    void Awake() {
+        transform.position = CheckPoints.GetChild(PlayerPrefs.GetInt("LastCheckpoit")).position;
+    }
+    IEnumerator Diying() {
+        isDiying = true;
+        //PlayAnimDie
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
+        isDiying = false;
+    }
+    public void StartCaring() {
+        if (!endedCar && PlayerPrefs.GetInt("SawCar") == 1) {
+            isControllingSkuf = false;
+            GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().isControllingCar = true;
+        }
+    }
+    public void StopCaring() {
+        GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().isControllingCar = false;
+        isControllingSkuf = true;
+    }
+    
+    public void Die() {
+        if (!isDiying) {
+            StartCoroutine(Diying());
+        }
+    }
     void Update()
     {
+        if (!isControllingSkuf) {
+            playerAnimator.SetBool("IsWalking", false);
+            return;
+        }
         // Проверка земли с визуализацией в редакторе
         isGrounded = Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.1f, groundLayer);
 

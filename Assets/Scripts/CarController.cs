@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    public bool isControllingCar = false;
     #region Serialized Fields
     [Header("References")]
     [SerializeField] private Transform _centerOfMass;
@@ -37,10 +38,12 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        CheckInput();
-        Move();
-        Brake();
-        Steer();
+        if (isControllingCar) {
+            CheckInput();
+            Move();
+            Brake();
+            Steer();
+        }
     }
     #endregion
 
