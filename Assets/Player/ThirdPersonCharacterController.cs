@@ -33,7 +33,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     IEnumerator Diying() {
         isDiying = true;
         //PlayAnimDie
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(0);
         isDiying = false;
     }
@@ -51,6 +51,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public void Die() {
         if (!isDiying) {
             StartCoroutine(Diying());
+            playerAnimator.SetTrigger("Die");
         }
     }
     void Update()
