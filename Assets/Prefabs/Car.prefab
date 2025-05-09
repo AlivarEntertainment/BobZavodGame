@@ -114,7 +114,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2066209292812091033}
@@ -175,8 +175,8 @@ MonoBehaviour:
   - WheelMesh: {fileID: 664690998371626998}
     WheelCollider: {fileID: 177494521672590246}
     IsFrontWheel: 0
-  _motorForce: 500
-  _brakeForce: 3000
+  _motorForce: 75
+  _brakeForce: 100
   _steeringCurve:
     serializedVersion: 2
     m_Curve:
