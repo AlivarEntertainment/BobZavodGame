@@ -30,17 +30,18 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public Transform CheckPoints;
     void Awake() {
-        transform.position = CheckPoints.GetChild(PlayerPrefs.GetInt("LastCheckpoit")).position;
+        //transform.position = CheckPoints.GetChild(PlayerPrefs.GetInt("LastCheckpoit")).position;
     }
     IEnumerator Diying() {
         isDiying = true;
         //PlayAnimDie
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         isDiying = false;
     }
     public void StartCaring() {
         if (!endedCar && PlayerPrefs.GetInt("SawCar") == 1) {
+            playerAnimator.SetBool("IsWalking", true);
             isControllingSkuf = false;
             GameObject.FindGameObjectWithTag("Car").transform.GetChild(3).gameObject.SetActive(true);
             GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().Caring();
@@ -53,7 +54,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     }
     
     public void Die() {
-        if (!isDiying) {
+        if (isDiying == true) {
             isControllingSkuf = false;
             StartCoroutine(Diying());
             playerAnimator.SetTrigger("Die");

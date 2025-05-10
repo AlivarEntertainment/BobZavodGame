@@ -1,18 +1,34 @@
 using UnityEngine;
-
+using System.Collections;
 public class Water : MonoBehaviour
 {
     private bool dropped = false;
-    public GameObject ToKill;
+    public Bots ToKill;
+    public GameObject CameraCar;
     void Update() {
         if (dropped) {
             return;
         }
-        if (transform.position.y < 3) {
+        if (transform.position.y < 3.5) {
             dropped = true;
-            ToKill.SetActive(false);
-            gameObject.SetActive(false);
+            ToKill.RobotAnimator.SetTrigger("DieSelf");
+            ToKill.enabled = false;
+            StartCoroutine("CameraChange");
             GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().StopCaring();
+        }
+    }
+    IEnumerator CameraChange()
+    {
+        
+        yield return new WaitForSeconds(4f);
+        CameraCar.SetActive(false);
+        gameObject.SetActive(false);
+    }
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Car")
+        {
+            CameraCar.SetActive(true);
         }
     }
 }

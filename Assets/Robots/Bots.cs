@@ -38,14 +38,19 @@ public class Bots : MonoBehaviour
         nextCheckTime = Time.time;
         if (waypoints.Count > 0) transform.position = waypoints[0].position;
     }
-
-    void Update()
+    private void FixedUpdate()
     {
-        if (Vector3.Distance(player.position, transform.position) < 2f || player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying) {
+        if (Vector3.Distance(this.transform.position, player.transform.position) < 2f)
+        {
+            player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying = true;
             player.gameObject.GetComponent<ThirdPersonCharacterController>().Die();
             RobotAnimator.SetTrigger("Die");
-            return;
+            ///return;
         }
+    }
+    void Update()
+    {
+        
         if (waypoints.Count == 0) return;
 
         if (Time.time >= nextCheckTime)
@@ -64,7 +69,7 @@ public class Bots : MonoBehaviour
         float targetSpeed = isChasing ? chaseSpeed : normalSpeed;
         
         // Плавное изменение скорости
-        if (currentSpeed < targetSpeed)
+        if (currentSpeed <= targetSpeed)
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
         }
