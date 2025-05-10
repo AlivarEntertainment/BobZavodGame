@@ -132,7 +132,7 @@ MonoBehaviour:
   delayAtWaypoint: 1
   acceleration: 5
   deceleration: 8
-  fovAngle: 120
+  fovAngle: 150
   visionRange: 20
   playerLayer:
     serializedVersion: 2

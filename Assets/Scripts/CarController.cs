@@ -52,6 +52,7 @@ public class CarController : MonoBehaviour
         if (transform.position.y < 1f) {
             isControllingCar = false;
             if (Water.transform.position.y > 4) {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().StopCaring();
                 GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().Die();
             }
         }
