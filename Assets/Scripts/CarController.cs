@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    public GameObject vent, Water;
     public bool isControllingCar = false;
     #region Serialized Fields
     [Header("References")]
@@ -28,6 +29,16 @@ public class CarController : MonoBehaviour
     private float _brakeInput;
     private float _speed;
     #endregion
+    
+    IEnumerator CaringCor() {
+        yield return new WaitForSeconds(1.5f);
+        isControllingCar = true;
+    }
+    public void Caring() {
+        vent.transform.GetChild(1).gameObject.SetActive(false);
+        vent.transform.GetChild(2).gameObject.SetActive(true);
+        StartCoroutine(CaringCor());
+    }
 
     #region Unity Methods
     private void Start()
@@ -38,6 +49,12 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < 1f) {
+            isControllingCar = false;
+            if (Water.transform.position.y > 4) {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().Die();
+            }
+        }
         if (isControllingCar) {
             CheckInput();
             Move();

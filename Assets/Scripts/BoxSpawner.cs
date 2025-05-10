@@ -3,8 +3,11 @@ using UnityEngine;
 public class BoxSpawner : MonoBehaviour
 {
     public GameObject BoxPrefub;
-    public float TimeDelay = 10f;
+    private float TimeDelay;
     private float TimeNow = 0f;
+    void Start() {
+        TimeDelay = 10f;
+    }
     void FixedUpdate() {
         TimeNow += Time.deltaTime;
         if (TimeNow >= TimeDelay) {

@@ -86,6 +86,7 @@ public class Bots : MonoBehaviour
     void CheckForPlayer()
     {
         if (player == null) return;
+        if (player.gameObject.GetComponent<ThirdPersonCharacterController>().InBoxCanvas.activeSelf) return;
 
         Vector3 directionToPlayer = player.position - transform.position;
         float distanceToPlayer = directionToPlayer.magnitude;

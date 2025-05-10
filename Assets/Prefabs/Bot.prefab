@@ -133,7 +133,7 @@ MonoBehaviour:
   acceleration: 5
   deceleration: 8
   fovAngle: 120
-  visionRange: 10
+  visionRange: 20
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -141,6 +141,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   chaseDuration: 5
+  RobotAnimator: {fileID: 0}
 --- !u!1 &1554374745758793079
 GameObject:
   m_ObjectHideFlags: 0

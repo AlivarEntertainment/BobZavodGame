@@ -17,6 +17,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    public GameObject InBoxCanvas;
+
     public Animator playerAnimator;
     [Space]
     public Transform cameraTransform;
@@ -25,6 +27,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     private bool isGrounded;
     
     public bool isDiying = false, isControllingSkuf = true, sawCar = false, endedCar = false;
+    public bool wasInBox = false;
 
     public Transform CheckPoints;
     void Awake() {
@@ -40,22 +43,36 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public void StartCaring() {
         if (!endedCar && PlayerPrefs.GetInt("SawCar") == 1) {
             isControllingSkuf = false;
-            GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().isControllingCar = true;
+            GameObject.FindGameObjectWithTag("Car").transform.GetChild(3).gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().Caring();
         }
     }
     public void StopCaring() {
+        GameObject.FindGameObjectWithTag("Car").transform.GetChild(3).gameObject.SetActive(false);
         GameObject.FindGameObjectWithTag("Car").GetComponent<CarController>().isControllingCar = false;
         isControllingSkuf = true;
     }
     
     public void Die() {
         if (!isDiying) {
+            isControllingSkuf = false;
             StartCoroutine(Diying());
             playerAnimator.SetTrigger("Die");
         }
     }
+    public void InBox(bool state) {
+        InBoxCanvas.SetActive(state);
+    }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && InBoxCanvas.activeSelf) {
+            wasInBox = true;
+            transform.parent = null;
+            isControllingSkuf = true;
+            InBox(false);
+            transform.GetChild(1).gameObject.SetActive(true);
+            GetComponent<CharacterController>().enabled = true;
+        }
         if (!isControllingSkuf) {
             playerAnimator.SetBool("IsWalking", false);
             return;
