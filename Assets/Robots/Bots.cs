@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class Bots : MonoBehaviour
@@ -38,16 +39,16 @@ public class Bots : MonoBehaviour
         nextCheckTime = Time.time;
         if (waypoints.Count > 0) transform.position = waypoints[0].position;
     }
-    private void FixedUpdate()
+   /* private void FixedUpdate()
     {
         if (Vector3.Distance(this.transform.position, player.transform.position) < 2f)
         {
-            player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying = true;
+            //player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying = true;
             player.gameObject.GetComponent<ThirdPersonCharacterController>().Die();
             RobotAnimator.SetTrigger("Die");
             ///return;
         }
-    }
+    }*/
     void Update()
     {
         
@@ -190,7 +191,17 @@ public class Bots : MonoBehaviour
         delayTimer = delayAtWaypoint;
         currentSpeed = 0f;
     }
-
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene(1);
+            player = other.gameObject.transform;
+            player.gameObject.GetComponent<ThirdPersonCharacterController>().isDiying = true;
+            player.gameObject.GetComponent<ThirdPersonCharacterController>().Die();
+            RobotAnimator.SetTrigger("Die");
+        }
+    }
     private void OnDrawGizmos()
     {
         // Визуализация поля зрения

@@ -21,8 +21,8 @@ public class BoxSpawner : MonoBehaviour
         }
         if (other.gameObject.transform.childCount == 0) {
             Destroy(other.gameObject);
-        } else {
+        } /*else {
             GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().Die();
-        }
+        }*/
     }
 }

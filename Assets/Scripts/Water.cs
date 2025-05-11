@@ -5,6 +5,7 @@ public class Water : MonoBehaviour
     private bool dropped = false;
     public Bots ToKill;
     public GameObject CameraCar;
+    public BoxCollider collider;
     void Update() {
         if (dropped) {
             return;
@@ -15,6 +16,7 @@ public class Water : MonoBehaviour
             ToKill.enabled = false;
             StartCoroutine("CameraChange");
             GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().StopCaring();
+            collider.enabled = false;
         }
     }
     IEnumerator CameraChange()
